@@ -5,4 +5,4 @@
 
 # Ссылки
 
-- [Страница проекта на GitHub Pages](https://lilyaka1.github.io/123123/)
+- [Страница проекта на GitHub Pages](https://lilyaka1.github.io/123123/scr/index.html)
