@@ -1,77 +1,36 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <title>Контакты</title>
-    <link rel="stylesheet" href="../style.css">
-</head>
-<body>
-    <header>
-        <h1>Контакты</h1>
-    </header>
-    <nav>
-        <a href="../index.html">Главная</a>
-        <a href="about.html">О нас</a>
-        <a href="contacts.html">Контакты</a>
-    </nav>
-    <main>
-        <h2>Связаться с нами</h2>
-        <form id="contactForm">
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required placeholder="Введите email">
-
-            <label for="phone">Телефон:</label>
-            <input type="tel" id="phone" name="phone" required pattern="^\+7\s?\(\d{3}\)\s?\d{3}-\d{2}-\d{2}$" placeholder="+7 (999) 123-45-67" title="Формат: +7 (999) 123-45-67">
-
-            <label for="date">Дата:</label>
-            <input type="date" id="date" name="date" required>
-
-            <label for="topic">Тема обращения:</label>
-            <select id="topic" name="topic" required>
-                <option value="">Выберите тему</option>
-                <option value="question">Вопрос</option>
-                <option value="feedback">Отзыв</option>
-                <option value="other">Другое</option>
-            </select>
-
-            <label for="message">Сообщение:</label>
-            <textarea id="message" name="message" required placeholder="Введите сообщение"></textarea>
-
-            <button type="submit">Отправить</button>
-        </form>
-        <div id="modal" class="modal" style="display:none;">
-            <div class="modal-content">
-                <span id="closeModal" class="close">&times;</span>
-                <p>Сообщение успешно отправлено!</p>
-            </div>
-        </div>
-    </main>
-    <footer>
-        &copy; 2025 Учебный проект
-    </footer>
-    <script>
-    // Модальное окно и валидация
-    const form = document.getElementById('contactForm');
-    const modal = document.getElementById('modal');
-    const closeModal = document.getElementById('closeModal');
-    form.addEventListener('submit', function(e) {
-        e.preventDefault();
-        if (form.checkValidity()) {
-            modal.style.display = 'block';
-        } else {
-            form.reportValidity();
-        }
-    });
-    closeModal.onclick = function() {
-        modal.style.display = 'none';
-        form.reset();
-    };
-    window.onclick = function(event) {
-        if (event.target == modal) {
-            modal.style.display = 'none';
-            form.reset();
-        }
-    };
-    </script>
-</body>
-</html>
+<!-- Кнопка открытия модалки -->
+<button id="openDialog" type="button">Написать нам</button>
+<!-- Модалка с формой -->
+<dialog id="contactDialog" aria-labelledby="dialogTitle">
+<h2 id="dialogTitle">Обратная связь</h2>
+<form id="contactForm" method="dialog" novalidate>
+<label for="name">Имя</label>
+<input id="name" name="name" type="text" required minlength="2"
+autocomplete="given-name">
+<label for="email">E-mail</label>
+<input id="email" name="email" type="email" required
+autocomplete="email">
+<label for="phone">Телефон</label>
+<input id="phone" name="phone" type="tel" inputmode="tel"
+autocomplete="tel"
+aria-describedby="phoneHelp" placeholder="+7 (___) ___-
+__
+required pattern="^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$">
+<small id="phoneHelp">Формат: +7 (900) 000-00-00</small>
+<label for="date">Дата</label>
+<input id="date" name="date" type="date">
+<label for="topic">Тема</label>
+<select id="topic" name="topic" required>
+<option value="">Выберите тему</option>
+<option>Вопрос</option>
+<option>Заказ</option>
+</select>
+-__"
+<label for="message">Сообщение</label>
+<textarea id="message" name="message" rows="4" required></textarea>
+<div class="form-actions">
+<button type="button" id="closeDialog">Закрыть</button>
+<button type="submit">Отправить</button>
+</div>
+</form>
+</dialog>
