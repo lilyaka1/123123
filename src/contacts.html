@@ -16,11 +16,115 @@
     </nav>
     <main>
         <h2>Связаться с нами</h2>
-        <p>Email: example@domain.com</p>
-        <p>Телефон: +7 (999) 123-45-67</p>
+        <form id="contactForm">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required placeholder="Введите email">
+
+            <label for="phone">Телефон:</label>
+            <input type="tel" id="phone" name="phone" required pattern="^\+7\s?\(\d{3}\)\s?\d{3}-\d{2}-\d{2}$" placeholder="+7 (999) 123-45-67" title="Формат: +7 (999) 123-45-67">
+
+            <label for="date">Дата:</label>
+            <input type="date" id="date" name="date" required>
+
+            <label for="topic">Тема обращения:</label>
+            <select id="topic" name="topic" required>
+                <option value="">Выберите тему</option>
+                <option value="question">Вопрос</option>
+                <option value="feedback">Отзыв</option>
+                <option value="other">Другое</option>
+            </select>
+
+            <label for="message">Сообщение:</label>
+            <textarea id="message" name="message" required placeholder="Введите сообщение"></textarea>
+
+            <button type="submit">Отправить</button>
+        </form>
+        <div id="modal" class="modal" style="display:none;">
+            <div class="modal-content">
+                <span id="closeModal" class="close">&times;</span>
+                <p>Сообщение успешно отправлено!</p>
+            </div>
+        </div>
     </main>
     <footer>
         &copy; 2025 Учебный проект
     </footer>
+    <script>
+    // Модальное окно и валидация
+    const form = document.getElementById('contactForm');
+    const modal = document.getElementById('modal');
+    const closeModal = document.getElementById('closeModal');
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        if (form.checkValidity()) {
+            modal.style.display = 'block';
+        } else {
+            form.reportValidity();
+        }
+    });
+    closeModal.onclick = function() {
+        modal.style.display = 'none';
+        form.reset();
+    };
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = 'none';
+            form.reset();
+        }
+    };
+    </script>
+    <style>
+    .modal {
+        position: fixed;
+        z-index: 1000;
+        left: 0; top: 0;
+        width: 100%; height: 100%;
+        overflow: auto;
+        background: rgba(0,0,0,0.4);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .modal-content {
+        background: #fff;
+        padding: 30px;
+        border-radius: 8px;
+        text-align: center;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        position: relative;
+    }
+    .close {
+        position: absolute;
+        right: 15px;
+        top: 10px;
+        font-size: 24px;
+        cursor: pointer;
+    }
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        margin-top: 20px;
+    }
+    label {
+        font-weight: bold;
+    }
+    input, select, textarea, button {
+        padding: 8px;
+        font-size: 16px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+    }
+    button {
+        background: #4a90e2;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        font-weight: bold;
+    }
+    button:hover {
+        background: #357abd;
+    }
+    </style>
 </body>
 </html>
