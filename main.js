@@ -1,93 +1,70 @@
-// main.js — надёжная версия с фолбэком и логами
-document.addEventListener('DOMContentLoaded', () => {
-  console.log('[init] main.js loaded');
+// компактная версия без полифиллов и лишних эффектов
+(function () {
+  const dlg   = document.getElementById('contactDialog');
+  const open  = document.getElementById('openDialog');
+  const close = document.getElementById('closeDialog');
+  const form  = document.getElementById('contactForm');
 
-  const dlg = document.getElementById('contactDialog');
-  const openBtn = document.getElementById('openDialog');
-  const closeBtn = document.getElementById('closeDialog');
-  const form = document.getElementById('contactForm');
-  let lastActive = null;
+  if (!dlg || !open || !close || !form) return;
 
-  if (!dlg) {
-    console.error('❌ Не найден <dialog id="contactDialog">. Проверь разметку index.html');
-    return;
-  }
-
-  // Поддержка старых браузеров: регистрируем полифилл, если нативного showModal нет
-  if (typeof dlg.showModal !== 'function') {
-    console.warn('⚠️ Нет нативной поддержки <dialog>, пробуем polyfill');
-    if (window.dialogPolyfill) {
-      window.dialogPolyfill.registerDialog(dlg);
-      console.log('✅ dialog-polyfill подключён');
-    } else {
-      console.warn('⚠️ dialog-polyfill не подключён — будет упрощённый фолбэк');
-    }
-  }
-
-  const openDialog = () => {
+  function openDialog() {
     try {
-      if (typeof dlg.showModal === 'function') {
-        dlg.showModal();
-      } else if (typeof dlg.show === 'function') {
-        dlg.show();            // polyfill-режим
-      } else {
-        dlg.setAttribute('open', ''); // самый простой фолбэк
-      }
-    } catch (e) {
-      console.error('showModal/show error:', e);
+      // предпочтительно нативно
+      if (typeof dlg.showModal === 'function') dlg.showModal();
+      else dlg.setAttribute('open', ''); // примитивный фолбэк
+    } catch (_) {
       dlg.setAttribute('open', '');
     }
-    // Фокус на первое интерактивное поле
-    dlg.querySelector('input,select,textarea,button')?.focus();
-  };
+    // фокус в первое поле
+    (dlg.querySelector('input,select,textarea,button') || dlg).focus();
+  }
 
-  const closeDialog = (returnValue = 'cancel') => {
-    try {
-      if (typeof dlg.close === 'function') dlg.close(returnValue);
-      else dlg.removeAttribute('open');
-    } catch (e) {
-      dlg.removeAttribute('open');
-    }
-  };
+  function closeDialog() {
+    try { dlg.close && dlg.close('cancel'); } catch (_) {}
+    dlg.removeAttribute('open');
+    open.focus();
+  }
 
-  openBtn?.addEventListener('click', () => {
-    lastActive = document.activeElement;
-    openDialog();
+  open.addEventListener('click', openDialog);
+  close.addEventListener('click', closeDialog);
+
+  // клик по фону — закрыть (работает и для <dialog>, и для фолбэка)
+  dlg.addEventListener('click', (e) => {
+    const rect = dlg.getBoundingClientRect();
+    const inBox = e.clientX >= rect.left && e.clientX <= rect.right &&
+                  e.clientY >= rect.top  && e.clientY <= rect.bottom;
+    if (!inBox) closeDialog();
   });
 
-  closeBtn?.addEventListener('click', () => closeDialog('cancel'));
+  // Esc — закрыть
+  dlg.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') { e.preventDefault(); closeDialog(); }
+  });
 
-  dlg?.addEventListener('close', () => { lastActive?.focus(); });
+  // простая валидация
+  form.addEventListener('submit', (e) => {
+    // сброс кастомных сообщений
+    [...form.elements].forEach(el => el.setCustomValidity && el.setCustomValidity(''));
 
-  // Валидация формы (Constraint Validation API)
-  form?.addEventListener('submit', (e) => {
-    // сбрасываем кастомные сообщения
-    [...form.elements].forEach(el => el.setCustomValidity?.(''));
+    const email = form.elements.email;
+    const phone = form.elements.phone;
+
+    if (email && email.validity.typeMismatch) {
+      email.setCustomValidity('Введите корректный e-mail, например name@example.com');
+    }
+    if (phone && phone.value && !/^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/.test(phone.value)) {
+      phone.setCustomValidity('Формат: +7 (900) 000-00-00');
+    }
 
     if (!form.checkValidity()) {
       e.preventDefault();
-
-      // Пользовательское сообщение для email
-      const email = form.elements.email;
-      if (email?.validity.typeMismatch) {
-        email.setCustomValidity('Введите корректный e-mail, например name@example.com');
-      }
-
       form.reportValidity();
-
-      // Подсветка невалидных полей
-      [...form.elements].forEach(el => {
-        if (el.willValidate) el.toggleAttribute('aria-invalid', !el.checkValidity());
-      });
       return;
     }
 
-    // Успешная «отправка» без сервера
-    e.preventDefault();
-    closeDialog('success');
+    e.preventDefault(); // имитация отправки без сервера
     form.reset();
+    closeDialog();
     alert('Спасибо! Форма отправлена ✅');
   });
-
-  console.log('[ready] handlers attached');
-});
+})();
