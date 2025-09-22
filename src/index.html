@@ -4,114 +4,113 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Главная — Путёвки в Венесуэлу</title>
-  <meta name="description" content="Тестовый сайт: услуги, портфолио, контакты.">
-  <link rel="icon" href="../assets/favicon.ico" sizes="any">
-  <link rel="icon" type="image/png" href="../assets/favicon-32.png" sizes="32x32">
-  <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
-  <meta name="theme-color" content="#0a84ff">
-  <link rel="stylesheet" href="style.css">
+  <meta name="description" content="Подберём тур под ваш бюджет и даты. Бесплатная консультация и подбор отелей.">
+  <link rel="icon" href="../assets/favicon.ico">
+  <link rel="stylesheet" href="../style.css">
   <script src="../main.js" defer></script>
 </head>
 <body>
-
-<header class="site-header">
-  <div class="container">
-    <a class="brand" href="index.html">Путёвки в Венесуэлу</a>
-    <nav class="site-nav" aria-label="Основная навигация">
-      <ul class="site-nav__list">
-        <li><a class="site-nav__link" href="index.html" aria-current="page">Главная</a></li>
-        <li><a class="site-nav__link" href="about.html">О нас</a></li>
-        <li><a class="site-nav__link" href="contacts.html">Контакты</a></li>
-      </ul>
-    </nav>
-    <button id="themeToggle" class="btn theme-toggle" type="button" aria-pressed="false">🌙 Тема</button>
-  </div>
-</header>
+  <header class="site-header">
+    <div class="container">
+      <a class="brand" href="index.html">Путёвки в Венесуэлу</a>
+      <nav class="site-nav" aria-label="Основная навигация">
+        <ul class="site-nav__list">
+          <li><a class="site-nav__link" href="index.html" aria-current="page">Главная</a></li>
+          <li><a class="site-nav__link" href="about.html">О нас</a></li>
+          <li><a class="site-nav__link" href="contacts.html">Контакты</a></li>
+        </ul>
+      </nav>
+      <button id="themeToggle" class="btn theme-toggle" type="button" aria-pressed="false">🌙 Тема</button>
+    </div>
+  </header>
 
   <main id="main">
+    <!-- HERO -->
     <section class="section section--tight">
-  <div class="container hero">
-    <div>
-      <span class="hero__kicker">Путешествия мечты</span>
-      <h1>Венесуэла: море, джунгли и новые впечатления</h1>
-      <p>Подберём тур под ваш бюджет и даты. Бесплатная консультация и подбор отелей.</p>
-      <p>
-        <a class="btn btn--primary" href="#services">Посмотреть услуги</a>
-        <button id="openDialog" type="button" class="btn">Написать нам</button>
-      </p>
-    </div>
-    <div class="hero__media">
-      <<picture>
-  <img src="../assets/hero-1200.jpg" alt="Главное фото направления">
-      </picture>
-    </div>
-  </div>
-</section>
-<section id="services" class="section">
-  <div class="container">
-    <h2>Наши услуги</h2>
-    <div class="cards">
-      <article class="card">
-        <h3>Подбор тура</h3>
-        <p>Соберём оптимальный маршрут и отели под ваш бюджет и даты.</p>
-      </article>
-      <article class="card">
-        <h3>Визы и страховки</h3>
-        <p>Поможем с оформлением документов без нервов и очередей.</p>
-      </article>
-      <article class="card">
-        <h3>Сопровождение</h3>
-        <p>Круглосуточная поддержка на протяжении всего путешествия.</p>
-      </article>
-    </div>
-    <!-- Видео -->
-  <section id="media" class="section">
-    <h2 class="section__title">Видео о проекте</h2>
-    <div class="media">
-      <iframe
-        class="media__video"
-        src="https://rutube.ru/video/b4521e67c43b8f28ed24dc3533f521cf/"
-        frameborder="0"
-        allow="clipboard-write; autoplay"
-        allowfullscreen
-        title="Видео о проекте">
-      </iframe>
-    </div>
-  </section>
-  </div>
-</section>
+      <div class="container hero">
+        <div>
+          <span class="hero__kicker">Путешествия мечты</span>
+          <h1>Венесуэла: море, джунгли и новые впечатления</h1>
+          <p>Подберём тур под ваш бюджет и даты. Бесплатная консультация и подбор отелей.</p>
+          <p>
+            <a class="btn btn--primary" href="#services">Посмотреть услуги</a>
+            <button id="openDialog" type="button" class="btn">Написать нам</button>
+          </p>
+        </div>
+        <div class="hero__media">
+          <img src="../assets/gallery-1.jpeg" alt="Главное фото направления">
+        </div>
+      </div>
+    </section>
 
-    
-<div class="gallery">
-  <figure>
-    <img src="../assets/gallery-1.jpeg"
-         alt="Фото 1"
-         sizes="(max-width:640px) 100vw, 33vw">
-  </figure>
-  <figure>
-    <img src="../assets/gallery-2.jpg"
-         alt="Фото 2"
-         sizes="(max-width:640px) 100vw, 33vw">
-  </figure>
-  <figure>
-    <img src="../assets/gallery-3.jpeg"
-         alt="Фото 3"
-         sizes="(max-width:640px) 100vw, 33vw">
-  </figure>
-</div>
+    <!-- УСЛУГИ -->
+    <section id="services" class="section">
+      <div class="container">
+        <h2>Наши услуги</h2>
+        <div class="cards">
+          <article class="card">
+            <h3>Подбор тура</h3>
+            <p>Соберём маршрут и отели под ваш бюджет и даты.</p>
+          </article>
+          <article class="card">
+            <h3>Визы и страховки</h3>
+            <p>Поможем с оформлением документов без очередей.</p>
+          </article>
+          <article class="card">
+            <h3>Сопровождение</h3>
+            <p>Круглосуточная поддержка во время путешествия.</p>
+          </article>
+        </div>
+      </div>
+    </section>
 
+    <!-- ГАЛЕРЕЯ -->
+    <section class="section">
+      <div class="container">
+        <h2>Фотографии</h2>
+        <div class="gallery">
+          <figure><img src="../assets/gallery-1.jpeg" alt="Фото 1"></figure>
+          <figure><img src="../assets/gallery-3.jpeg" alt="Фото 2"></figure>
+          <figure><img src="../assets/gallery-1.jpeg" alt="Фото 3"></figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ВИДЕО (если будет локальный файл — см. комментарий в HTML ниже) -->
+    <section class="section section--tight">
+      <div class="container">
+        <h2>Короткое видео о направлении</h2>
+        <div class="video">
+          <!-- Вариант 1: YouTube -->
+          <iframe src="https://www.youtube.com/embed/Scxs7L0vhZ4"
+                  title="Travel teaser" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowfullscreen></iframe>
+          <!-- Вариант 2 (локальный): 
+          <video controls poster="../assets/teaser-poster.jpg">
+            <source src="../assets/teaser.mp4" type="video/mp4">
+          </video>
+          -->
+        </div>
+      </div>
+    </section>
+
+    <!-- КОНТАКТЫ -->
     <section id="contacts" class="section">
-      <h2>Контакты</h2>
-      <p>Наш телефон: +7 (900) 000-00-00</p>
-      <p><a class="btn" href="contacts.html">Подробнее</a></p>
+      <div class="container">
+        <h2>Контакты</h2>
+        <p>Телефон: +7 (900) 000-00-00</p>
+        <p><a class="btn" href="contacts.html">Подробнее</a></p>
+      </div>
     </section>
   </main>
 
   <footer class="site-footer">
-    <p>© 2025 Путёвки в Венесуэлу</p>
+    <div class="container">
+      <p>© 2025 Путёвки в Венесуэлу</p>
+    </div>
   </footer>
 
-  <!-- МОДАЛЬНОЕ ОКНО -->
+  <!-- МОДАЛКА -->
   <dialog id="contactDialog" aria-labelledby="dialogTitle">
     <h2 id="dialogTitle">Обратная связь</h2>
     <form id="contactForm" method="dialog" novalidate>
@@ -122,10 +121,9 @@
       <input id="email" name="email" type="email" required autocomplete="email">
 
       <label for="phone">Телефон</label>
-      <input id="phone" name="phone" type="tel" inputmode="tel"
-             aria-describedby="phoneHelp" placeholder="+7 (900) 000-00-00"
+      <input id="phone" name="phone" type="tel" placeholder="+7 (900) 000-00-00"
              required pattern="^\\+7 \\(\\d{3}\\) \\d{3}-\\d{2}-\\d{2}$">
-      <small id="phoneHelp">Формат: +7 (900) 000-00-00</small>
+      <small>Формат: +7 (900) 000-00-00</small>
 
       <label for="date">Дата</label>
       <input id="date" name="date" type="date">

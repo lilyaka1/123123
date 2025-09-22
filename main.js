@@ -1,24 +1,16 @@
-// компактная версия без полифиллов и лишних эффектов
+// МОДАЛКА + ВАЛИДАЦИЯ (минимально, без полифиллов)
 (function () {
   const dlg   = document.getElementById('contactDialog');
   const open  = document.getElementById('openDialog');
   const close = document.getElementById('closeDialog');
   const form  = document.getElementById('contactForm');
-
   if (!dlg || !open || !close || !form) return;
 
   function openDialog() {
-    try {
-      // предпочтительно нативно
-      if (typeof dlg.showModal === 'function') dlg.showModal();
-      else dlg.setAttribute('open', ''); // примитивный фолбэк
-    } catch (_) {
-      dlg.setAttribute('open', '');
-    }
-    // фокус в первое поле
+    try { (typeof dlg.showModal === 'function') ? dlg.showModal() : dlg.setAttribute('open', ''); }
+    catch (_) { dlg.setAttribute('open', ''); }
     (dlg.querySelector('input,select,textarea,button') || dlg).focus();
   }
-
   function closeDialog() {
     try { dlg.close && dlg.close('cancel'); } catch (_) {}
     dlg.removeAttribute('open');
@@ -27,60 +19,34 @@
 
   open.addEventListener('click', openDialog);
   close.addEventListener('click', closeDialog);
-
-  // клик по фону — закрыть (работает и для <dialog>, и для фолбэка)
   dlg.addEventListener('click', (e) => {
-    const rect = dlg.getBoundingClientRect();
-    const inBox = e.clientX >= rect.left && e.clientX <= rect.right &&
-                  e.clientY >= rect.top  && e.clientY <= rect.bottom;
-    if (!inBox) closeDialog();
+    const r = dlg.getBoundingClientRect();
+    const inside = e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom;
+    if (!inside) closeDialog();
   });
+  dlg.addEventListener('keydown', (e) => { if (e.key === 'Escape') { e.preventDefault(); closeDialog(); } });
 
-  // Esc — закрыть
-  dlg.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') { e.preventDefault(); closeDialog(); }
-  });
-
-  // простая валидация
   form.addEventListener('submit', (e) => {
-    // сброс кастомных сообщений
-    [...form.elements].forEach(el => el.setCustomValidity && el.setCustomValidity(''));
-
+    [...form.elements].forEach(el => el.setCustomValidity?.(''));
     const email = form.elements.email;
-    // Маска телефона
-const phone = document.getElementById('phone');
-phone?.addEventListener('input', () => {
-  const digits = phone.value.replace(/\D/g, '').slice(0, 11);
-  const d = digits.replace(/^8/, '7');
-  const parts = [];
-  if (d.length > 0) parts.push('+7');
-  if (d.length > 1) parts.push(' (' + d.slice(1,4));
-  if (d.length >= 4) parts[parts.length - 1] += ')';
-  if (d.length >= 5) parts.push(' ' + d.slice(4,7));
-  if (d.length >= 8) parts.push('-' + d.slice(7,9));
-  if (d.length >= 10) parts.push('-' + d.slice(9,11));
-  phone.value = parts.join('');});
+    const phone = form.elements.phone;
 
-    if (email && email.validity.typeMismatch) {
+    if (email?.validity.typeMismatch) {
       email.setCustomValidity('Введите корректный e-mail, например name@example.com');
     }
     if (phone && phone.value && !/^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/.test(phone.value)) {
       phone.setCustomValidity('Формат: +7 (900) 000-00-00');
     }
 
-    if (!form.checkValidity()) {
-      e.preventDefault();
-      form.reportValidity();
-      return;
-    }
-
-    e.preventDefault(); // имитация отправки без сервера
+    if (!form.checkValidity()) { e.preventDefault(); form.reportValidity(); return; }
+    e.preventDefault();
     form.reset();
     closeDialog();
     alert('Спасибо! Форма отправлена ✅');
   });
 })();
-// Переключатель темы (лайт/дарк) с сохранением в localStorage
+
+// ТЁМНАЯ ТЕМА (кнопка в шапке)
 (function(){
   const btn = document.getElementById('themeToggle');
   if (!btn) return;
@@ -91,7 +57,6 @@ phone?.addEventListener('input', () => {
     btn.textContent = (mode === 'dark') ? '☀️ Тема' : '🌙 Тема';
   };
 
-  // начальная тема
   const saved = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
   apply(saved);
 

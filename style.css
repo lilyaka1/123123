@@ -81,6 +81,8 @@ small{color:var(--muted)}
 
 /* ===== Медиа ===== */
 img,video{max-width:100%; height:auto; display:block}
+.hero__media img{width:100%; height:auto; display:block}
+
 @media (max-width: 900px){
   .hero{grid-template-columns:1fr; gap:var(--space-4)}
   .cards,.gallery{grid-template-columns:1fr 1fr}
@@ -88,8 +90,3 @@ img,video{max-width:100%; height:auto; display:block}
 @media (max-width: 640px){
   .cards,.gallery{grid-template-columns:1fr}
 }
-/* чёткие картинки без размытия при масштабировании */
-img { image-rendering: auto; }
-
-/* чтобы большие локальные изображения не «ломали» сетку */
-.hero__media img { width: 100%; height: auto; display: block; }

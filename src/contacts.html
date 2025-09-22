@@ -2,36 +2,47 @@
 <html lang="ru">
 <head>
   <meta charset="utf-8">
-  <link rel="icon" href="../assets/favicon.ico" sizes="any">
-  <link rel="icon" type="image/png" href="../assets/favicon-32.png" sizes="32x32">
-  <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
-  <meta name="theme-color" content="#0a84ff">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Контакты — Путёвки в Венесуэлу</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="../assets/favicon.ico">
+  <link rel="stylesheet" href="../style.css">
+  <script src="../main.js" defer></script>
 </head>
 <body>
   <header class="site-header">
-    <a class="site-header__brand" href="index.html">Путёвки в Венесуэлу</a>
-    <nav class="site-nav" aria-label="Основная навигация">
-      <ul class="site-nav__list">
-        <li><a class="site-nav__link" href="index.html">Главная</a></li>
-        <li><a class="site-nav__link" href="about.html">О нас</a></li>
-        <li><a class="site-nav__link" href="contacts.html" aria-current="page">Контакты</a></li>
-      </ul>
-    </nav>
+    <div class="container">
+      <a class="brand" href="index.html">Путёвки в Венесуэлу</a>
+      <nav class="site-nav" aria-label="Основная навигация">
+        <ul class="site-nav__list">
+          <li><a class="site-nav__link" href="index.html">Главная</a></li>
+          <li><a class="site-nav__link" href="about.html">О нас</a></li>
+          <li><a class="site-nav__link" href="contacts.html" aria-current="page">Контакты</a></li>
+        </ul>
+      </nav>
+      <button id="themeToggle" class="btn theme-toggle" type="button" aria-pressed="false">🌙 Тема</button>
+    </div>
   </header>
 
-  <main id="main" class="section">
-    <h1>Контакты</h1>
-    <address>
-      Тел.: +7 (900) 000-00-00<br>
-      E-mail: info@example.com
-    </address>
+  <main class="section">
+    <div class="container">
+      <h1>Контакты</h1>
+      <address>
+        Тел.: +7 (900) 000-00-00<br>
+        E-mail: info@example.com
+      </address>
+
+      <h2>Мы на карте</h2>
+      <div class="video">
+        <iframe
+          src="https://www.google.com/maps?q=Caracas,+Venezuela&output=embed"
+          title="Карта"
+          loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+    </div>
   </main>
 
   <footer class="site-footer">
-    <p>© 2025 Путёвки в Венесуэлу</p>
+    <div class="container"><p>© 2025 Путёвки в Венесуэлу</p></div>
   </footer>
 </body>
 </html>
