@@ -1,0 +1,6 @@
+# ОС
+.DS_Store
+Thumbs.db
+# Логи/зависимости
+npm-debug.log*
+node_modules/

@@ -1,33 +1,75 @@
-/* БАЗА: читаемость и предсказуемость размеров */
-* { box-sizing: border-box; }
-html, body { margin: 0; padding: 0; }
-body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial,
-sans-serif; line-height: 1.5; }
-/* Формы: размеры, отступы, визуальный порядок */
-label { display: block; margin: 0.5rem 0 0.25rem; }
-input, select, textarea, button {
-width: 100%;
-max-width: 480px;
-padding: .5rem .75rem;
-border: 1px solid #c8c8c8;
-border-radius: 8px;
-background: #fff;
+/* Токены (переменные) */
+:root{
+  --color-bg:#fff;
+  --color-fg:#0b0b0b;
+  --color-muted:#666;
+  --color-primary:#0a84ff;
+  --color-danger:#b00020;
+
+  --space-1:4px; --space-2:8px; --space-3:16px; --space-4:24px; --space-5:40px;
+  --radius:12px;
+  --shadow:0 1px 2px rgba(0,0,0,.08), 0 8px 24px rgba(0,0,0,.08);
+
+  --font-body:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
 }
-/* Кнопка по умолчанию */
-button, [type="submit"] {
-background: #0a84ff;
-color: #fff;
-border: none;
-cursor: pointer;
+
+*{ box-sizing:border-box; }
+html,body{ margin:0; padding:0; }
+html{ scroll-behavior:smooth; }
+body{
+  background:var(--color-bg);
+  color:var(--color-fg);
+  font-family:var(--font-body);
+  line-height:1.5;
 }
-/* Состояния: клавиатура/мышь/ошибки */
-:where(input, select, textarea, button):focus-visible {
-outline: 2px solid #0a84ff; outline-offset: 2px;
+
+/* Доступность */
+:where(a,button,input,select,textarea):focus-visible{
+  outline:2px solid var(--color-primary);
+  outline-offset:2px;
 }
-button:hover { filter: brightness(0.95); }
-:disabled, [aria-disabled="true"] { opacity: .6; cursor: not-allowed; }
-/* Подсветка ошибочных полей (установите aria-invalid="true") */
-[aria-invalid="true"] { border-color: #b00020; }
-dialog { padding: 1.25rem; border: none; border-radius: 12px; }
-dialog::backdrop { background: rgba(0,0,0,.5); }
-.form-actions { display:flex; gap:.5rem; margin-top:1rem; }
+:disabled,[aria-disabled="true"]{ opacity:.6; cursor:not-allowed; }
+[aria-invalid="true"]{ border-color:var(--color-danger)!important; }
+
+/* Сетка/каркас */
+.site-header{
+  display:flex; align-items:center; gap:var(--space-3);
+  padding:var(--space-3); border-bottom:1px solid #eee;
+}
+.site-header__brand{ font-weight:700; text-decoration:none; color:inherit; }
+.site-nav__list{ list-style:none; display:flex; gap:var(--space-3); margin:0; padding:0; }
+.site-nav__link{ text-decoration:none; color:inherit; }
+.site-nav__link[aria-current="page"]{ text-decoration:underline; }
+
+.section{ padding-block:var(--space-5); }
+.site-footer{ padding:var(--space-4); border-top:1px solid #eee; color:var(--color-muted); }
+
+/* Кнопки */
+.btn{
+  display:inline-block; padding:10px 16px; border-radius:10px;
+  background:#f3f4f6; border:1px solid #e5e7eb; cursor:pointer;
+  text-decoration:none; color:inherit; box-shadow:var(--shadow);
+}
+.btn:hover{ filter:brightness(.98); }
+.btn--primary{ background:var(--color-primary); color:#fff; border-color:transparent; }
+
+/* Формы */
+label{ display:block; margin-top:var(--space-3); }
+input,select,textarea{
+  width:100%; padding:10px 12px; border-radius:10px; border:1px solid #d1d5db;
+  font:inherit;
+}
+small{ color:var(--color-muted); }
+.form-actions{ display:flex; gap:var(--space-3); justify-content:flex-end; margin-top:var(--space-4); }
+
+/* Модалка */
+dialog{
+  width:min(560px, 92vw);
+  border:none; border-radius:var(--radius);
+  padding:var(--space-4);
+  box-shadow:var(--shadow);
+}
+dialog::backdrop{ background:rgba(0,0,0,.5); }
+
+/* Медиа по умолчанию */
+img,video{ max-width:100%; height:auto; display:block; }
