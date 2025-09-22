@@ -68,3 +68,24 @@
     alert('Спасибо! Форма отправлена ✅');
   });
 })();
+// Переключатель темы (лайт/дарк) с сохранением в localStorage
+(function(){
+  const btn = document.getElementById('themeToggle');
+  if (!btn) return;
+
+  const apply = (mode) => {
+    document.documentElement.classList.toggle('theme-dark', mode === 'dark');
+    btn.setAttribute('aria-pressed', String(mode === 'dark'));
+    btn.textContent = (mode === 'dark') ? '☀️ Тема' : '🌙 Тема';
+  };
+
+  // начальная тема
+  const saved = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  apply(saved);
+
+  btn.addEventListener('click', () => {
+    const next = document.documentElement.classList.contains('theme-dark') ? 'light' : 'dark';
+    localStorage.setItem('theme', next);
+    apply(next);
+  });
+})();
