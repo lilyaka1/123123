@@ -10,29 +10,23 @@
 
   // Открытие модалки
   open.addEventListener('click', () => {
-    if (typeof dlg.showModal === 'function') {
-      dlg.showModal();
-    } else {
-      dlg.setAttribute('open', '');
-    }
-    // Фокус на первом поле формы
+    dlg.classList.add('active');
     (dlg.querySelector('input, select, textarea, button') || dlg).focus();
   });
 
   // Закрытие модалки
-  close.addEventListener('click', () => dlg.close());
+  close.addEventListener('click', () => dlg.classList.remove('active'));
 
-  // Закрытие при клике вне модалки
+  // Закрытие при клике по фону
   dlg.addEventListener('click', (e) => {
-    const r = dlg.getBoundingClientRect();
-    if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) {
-      dlg.close();
-    }
+    if (e.target === dlg) dlg.classList.remove('active');
   });
 
   // Закрытие по Escape
-  dlg.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') dlg.close();
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && dlg.classList.contains('active')) {
+      dlg.classList.remove('active');
+    }
   });
 
   // Валидация формы
@@ -59,7 +53,7 @@
 
     // Если всё ок
     form.reset();
-    dlg.close();
+    dlg.classList.remove('active');
     alert('Спасибо! Форма отправлена ✅');
   });
 })();
