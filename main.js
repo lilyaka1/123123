@@ -1,3 +1,4 @@
+
 const dlg   = document.getElementById('contactDialog');
 const open  = document.getElementById('openDialog');
 const close = document.getElementById('closeDialog');
