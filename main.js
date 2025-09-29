@@ -41,10 +41,7 @@ if (dlg && open && close && form) {
     alert('Спасибо! Форма отправлена ✅');
   });
 }
-
-// ============================
-// ТЁМНАЯ ТЕМА
-// ===========================
+(function () {
   const btn = document.getElementById('themeToggle');
   if (!btn) return;
 
@@ -61,3 +58,5 @@ if (dlg && open && close && form) {
     const next = document.documentElement.classList.contains('theme-dark') ? 'light' : 'dark';
     localStorage.setItem('theme', next);
     apply(next);
+  });
+})();
