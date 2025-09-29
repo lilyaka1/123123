@@ -1,4 +1,6 @@
-// МОДАЛКА + ВАЛИДАЦИЯ (минимально, без полифиллов)
+// ============================
+// МОДАЛКА + ВАЛИДАЦИЯ
+// ============================
 (function () {
   const dlg   = document.getElementById('contactDialog');
   const open  = document.getElementById('openDialog');
@@ -6,28 +8,40 @@
   const form  = document.getElementById('contactForm');
   if (!dlg || !open || !close || !form) return;
 
-  function openDialog() {
-    try { (typeof dlg.showModal === 'function') ? dlg.showModal() : dlg.setAttribute('open', ''); }
-    catch (_) { dlg.setAttribute('open', ''); }
-    (dlg.querySelector('input,select,textarea,button') || dlg).focus();
-  }
-  function closeDialog() {
-    try { dlg.close && dlg.close('cancel'); } catch (_) {}
-    dlg.removeAttribute('open');
-    open.focus();
-  }
+  // Открытие модалки
+  open.addEventListener('click', () => {
+    if (typeof dlg.showModal === 'function') {
+      dlg.showModal();
+    } else {
+      dlg.setAttribute('open', '');
+    }
+    // Фокус на первом поле формы
+    (dlg.querySelector('input, select, textarea, button') || dlg).focus();
+  });
 
-  open.addEventListener('click', openDialog);
-  close.addEventListener('click', closeDialog);
+  // Закрытие модалки
+  close.addEventListener('click', () => dlg.close());
+
+  // Закрытие при клике вне модалки
   dlg.addEventListener('click', (e) => {
     const r = dlg.getBoundingClientRect();
-    const inside = e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom;
-    if (!inside) closeDialog();
+    if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) {
+      dlg.close();
+    }
   });
-  dlg.addEventListener('keydown', (e) => { if (e.key === 'Escape') { e.preventDefault(); closeDialog(); } });
 
+  // Закрытие по Escape
+  dlg.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') dlg.close();
+  });
+
+  // Валидация формы
   form.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    // Сброс кастомных ошибок
     [...form.elements].forEach(el => el.setCustomValidity?.(''));
+
     const email = form.elements.email;
     const phone = form.elements.phone;
 
@@ -38,23 +52,29 @@
       phone.setCustomValidity('Формат: +7 (900) 000-00-00');
     }
 
-    if (!form.checkValidity()) { e.preventDefault(); form.reportValidity(); return; }
-    e.preventDefault();
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+
+    // Если всё ок
     form.reset();
-    closeDialog();
+    dlg.close();
     alert('Спасибо! Форма отправлена ✅');
   });
 })();
 
-// ТЁМНАЯ ТЕМА (кнопка в шапке)
-(function(){
+// ============================
+// ТЁМНАЯ ТЕМА
+// ============================
+(function () {
   const btn = document.getElementById('themeToggle');
   if (!btn) return;
 
   const apply = (mode) => {
     document.documentElement.classList.toggle('theme-dark', mode === 'dark');
     btn.setAttribute('aria-pressed', String(mode === 'dark'));
-    btn.textContent = (mode === 'dark') ? '☀️ Тема' : '🌙 Тема';
+    btn.textContent = mode === 'dark' ? '☀️ Тема' : '🌙 Тема';
   };
 
   const saved = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
