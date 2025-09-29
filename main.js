@@ -1,6 +1,4 @@
-
-(function () {
-  const dlg   = document.getElementById('contactDialog');
+const dlg   = document.getElementById('contactDialog');
 const open  = document.getElementById('openDialog');
 const close = document.getElementById('closeDialog');
 const form  = document.getElementById('contactForm');
@@ -65,4 +63,3 @@ if (dlg && open && close && form) {
     localStorage.setItem('theme', next);
     apply(next);
   });
-})();
