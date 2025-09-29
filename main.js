@@ -1,47 +1,71 @@
+const dlg = document.getElementById('contactDialog');
+const openBtn = document.getElementById('openDialog');
+const closeBtn = document.getElementById('closeDialog');
+const form = document.getElementById('contactForm');
+let lastActive = null;
 
-const dlg   = document.getElementById('contactDialog');
-const open  = document.getElementById('openDialog');
-const close = document.getElementById('closeDialog');
-const form  = document.getElementById('contactForm');
+// Открытие
+openBtn?.addEventListener('click', () => {
+  lastActive = document.activeElement;
+  dlg.showModal();
+  dlg.querySelector('input,select,textarea,button')?.focus();
+});
 
-if (dlg && open && close && form) {
+// Закрытие
+closeBtn?.addEventListener('click', () => dlg.close('cancel'));
 
-  open.addEventListener('click', () => {
-    if (typeof dlg.showModal === 'function') {
-      dlg.showModal();
-    } else {
-      dlg.setAttribute('open', '');
-    }
-    (dlg.querySelector('input, select, textarea, button') || dlg).focus();
-  });
+// Валидация
+form?.addEventListener('submit', (e) => {
+  [...form.elements].forEach(el => el.setCustomValidity?.(''));
 
-  close.addEventListener('click', () => dlg.close());
-
-  dlg.addEventListener('click', e => {
-    const rect = dlg.getBoundingClientRect();
-    if (e.clientX < rect.left || e.clientX > rect.right ||
-        e.clientY < rect.top || e.clientY > rect.bottom) {
-      dlg.close();
-    }
-  });
-
-  dlg.addEventListener('keydown', e => { if (e.key === 'Escape') dlg.close(); });
-
-  form.addEventListener('submit', e => {
+  if (!form.checkValidity()) {
     e.preventDefault();
-    [...form.elements].forEach(el => el.setCustomValidity?.(''));
     const email = form.elements.email;
-    const phone = form.elements.phone;
-    if (email?.validity.typeMismatch)
+    if (email?.validity.typeMismatch) {
       email.setCustomValidity('Введите корректный e-mail, например name@example.com');
-    if (phone && phone.value && !/^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/.test(phone.value))
-      phone.setCustomValidity('Формат: +7 (900) 000-00-00');
-    if (!form.checkValidity()) { form.reportValidity(); return; }
-    form.reset();
-    dlg.close();
-    alert('Спасибо! Форма отправлена ✅');
-  });
+    }
+    form.reportValidity();
+    [...form.elements].forEach(el => {
+      if (el.willValidate) el.toggleAttribute('aria-invalid', !el.checkValidity());
+    });
+    return;
+  }
+
+  e.preventDefault();
+  alert("Форма успешно отправлена!");
+  dlg.close('success');
+  form.reset();
+});
+
+dlg?.addEventListener('close', () => { lastActive?.focus(); });
+
+// Маска телефона
+const phone = document.getElementById('phone');
+phone?.addEventListener('input', () => {
+  const digits = phone.value.replace(/\D/g, '').slice(0, 11);
+  const d = digits.replace(/^8/, '7');
+  const parts = [];
+  if (d.length > 0) parts.push('+7');
+  if (d.length > 1) parts.push(' (' + d.slice(1,4));
+  if (d.length >= 4) parts[parts.length - 1] += ')';
+  if (d.length >= 5) parts.push(' ' + d.slice(4,7));
+  if (d.length >= 8) parts.push('-' + d.slice(7,9));
+  if (d.length >= 10) parts.push('-' + d.slice(9,11));
+  phone.value = parts.join('');
+});
+// Улучшенный переключатель темы с сохранением в localStorage
+const themeToggle = document.getElementById('themeToggle');
+const savedTheme = localStorage.getItem('theme');
+if (savedTheme === 'dark') {
+  document.body.classList.add('theme-dark');
+  if (themeToggle) themeToggle.textContent = 'Светлая тема';
 }
+themeToggle?.addEventListener('click', () => {
+  document.body.classList.toggle('theme-dark');
+  const isDark = document.body.classList.contains('theme-dark');
+  themeToggle.textContent = isDark ? 'Светлая тема' : 'Тёмная тема';
+  localStorage.setItem('theme', isDark ? 'dark' : 'light');
+});
 (function () {
   const btn = document.getElementById('themeToggle');
   if (!btn) return;
