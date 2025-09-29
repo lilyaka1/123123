@@ -120,22 +120,22 @@
                  required pattern="^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$">
           <small id="phoneHelp" class="form__help">Формат: +7 (900) 000-00-00</small>
 
-      <label for="date">Дата</label>
-      <input id="date" name="date" type="date">
+      <label class="form__label" for="date">Дата</label>
+          <input class="form__input" id="date" name="date" type="date">
 
-      <label for="topic">Тема</label>
-      <select id="topic" name="topic" required>
-        <option value="">Выберите тему</option>
-        <option>Вопрос</option>
-        <option>Заказ</option>
-      </select>
+          <label class="form__label" for="topic">Тема</label>
+          <select class="form__input" id="topic" name="topic" required>
+            <option value="">Выберите тему</option>
+            <option>Вопрос</option>
+            <option>Заказ</option>
+          </select>
 
-      <label for="message">Сообщение</label>
-      <textarea id="message" name="message" rows="4" required></textarea>
+          <label class="form__label" for="message">Сообщение</label>
+          <textarea class="form__input" id="message" name="message" rows="4" required></textarea>
 
-      <div class="form-actions">
-        <button type="button" id="closeDialog" class="btn">Закрыть</button>
-        <button type="submit" class="btn btn--primary">Отправить</button>
+          <div class="form__actions">
+            <button type="button" id="closeDialog" class="btn-secondary">Закрыть</button>
+            <button type="submit" class="btn-primary">Отправить</button>
       </div>
     </form>
   </dialog>
